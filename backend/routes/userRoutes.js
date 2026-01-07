@@ -1,15 +1,10 @@
 const express = require("express");
-const { createUser } = require("../controllers/userController");
-const { protect } = require("../middleware/authMiddleware");
-
 const router = express.Router();
 
-// public route
-router.post("/", createUser);
+const { createUser, getMe } = require("../controllers/userController");
+const { protect } = require("../middleware/authMiddleware");
 
-// protected test route
-router.get("/me", protect, (req, res) => {
-  res.json(req.user);
-});
+router.post("/", createUser);
+router.get("/me", protect, getMe);
 
 module.exports = router;
