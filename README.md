@@ -55,7 +55,7 @@ JWT_SECRET=your_jwt_secret
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/mern-ecommerce.git
+git clone https://github.com/v9mirza/mern-ecommerce.git
 cd mern-ecommerce
 
 ```
