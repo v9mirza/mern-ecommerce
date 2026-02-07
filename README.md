@@ -45,9 +45,6 @@ JWT_SECRET=your_secret
 - **Products:** `/api/products` (GET, POST), `/api/products/:id` (GET)
 - **Orders:** `/api/orders` (POST, GET), `/api/orders/myorders`
 
-## Project Status
-
-Backend is complete. Frontend is in progress. Payments/Deployment pending.
 
 ## License
 
