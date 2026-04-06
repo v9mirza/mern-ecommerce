@@ -44,9 +44,9 @@ async function run() {
     ],
     shippingAddress: {
       address: "123 MVP Street",
-      city: "Karachi",
-      postalCode: "74000",
-      country: "Pakistan",
+      city: "Mumbai",
+      postalCode: "400001",
+      country: "India",
     },
     paymentMethod: "Cash On Delivery",
     itemsPrice: 299,

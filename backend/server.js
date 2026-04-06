@@ -6,9 +6,13 @@ const cors = require("cors");
 dotenv.config();
 
 const app = express();
+const setupAdmin = require("./admin/setup");
 
 app.use(cors());
 app.use(express.json());
+
+// Set up AdminJS
+setupAdmin(app);
 
 mongoose
   .connect(process.env.MONGO_URI)

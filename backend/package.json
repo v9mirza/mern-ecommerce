@@ -14,18 +14,22 @@
     "test:orders": "node scripts/test-orders.js",
     "test:cart": "node scripts/test-cart.js",
     "test:mvp": "npm run test:health && npm run test:auth && npm run test:products && npm run test:orders && npm run test:cart"
-
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@adminjs/express": "^6.1.1",
+    "@adminjs/mongoose": "^4.1.0",
+    "adminjs": "^7.8.17",
     "bcryptjs": "^3.0.3",
+    "connect-mongo": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",
-    "mongoose": "^9.1.1"
+    "mongoose": "^8.23.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
