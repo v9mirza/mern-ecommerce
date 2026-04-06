@@ -1,51 +1,83 @@
-# MERN E-Commerce Application
+# DevCart Backend
 
-A full-stack e-commerce application built with MongoDB, Express, React, and Node.js. Features user authentication, product management, and order processing.
+DevCart is a backend-only e-commerce API built with Node.js, Express, and MongoDB.
 
-## Features
+## What is built
 
-- **User Authentication:** JWT-based login/register with role-based access (Admin/User).
-- **Product Management:** CRUD operations for products.
-- **Order System:** Order creation and history viewing.
-- **Security:** Password hashing (bcrypt) and protected routes.
+- JWT auth (register, login, protected profile)
+- Role-based access (user/admin)
+- Product APIs (list, get by id, create, update, delete)
+- Order APIs (create, my orders, get by id, mark paid, admin list all, mark delivered)
+- Product seeder with sample data
+- MVP test scripts for health, auth, products, and orders
 
-## Tech Stack
+## Tech stack
 
-- **Frontend:** React, Vite, Axios, React Router
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB, Mongoose
+- Node.js
+- Express
+- MongoDB + Mongoose
+- bcryptjs + jsonwebtoken
 
-## Environment Variables
+## Environment
 
-Create a `.env` file in the `backend` directory:
+Create `backend/.env`:
 
 ```env
 PORT=5000
-MONGO_URI=your_mongodb_uri
-JWT_SECRET=your_secret
+MONGO_URI=mongodb://127.0.0.1:27017/devcart
+JWT_SECRET=replace_with_a_long_random_secret
+API_BASE_URL=http://localhost:5000
+TEST_USER_NAME=MVP Test User
+TEST_USER_EMAIL=devcart.user@example.com
+TEST_USER_PASSWORD=password123
+TEST_ADMIN_NAME=MVP Test Admin
+TEST_ADMIN_EMAIL=devcart.admin@example.com
+TEST_ADMIN_PASSWORD=adminpass123
 ```
 
-## Getting Started
+## Run locally
 
-1. **Clone:** `git clone https://github.com/v9mirza/mern-ecommerce.git`
-2. **Backend:**
-   ```bash
-   cd backend && npm install
-   npm run dev
-   ```
-3. **Frontend:**
-   ```bash
-   cd frontend && npm install
-   npm run dev
-   ```
+```bash
+cd backend
+npm install
+npm run dev
+```
 
-## API Endpoints
+## Seed products
 
-- **Auth:** `/api/users/register`, `/api/users/login`, `/api/users/me`
-- **Products:** `/api/products` (GET, POST), `/api/products/:id` (GET)
-- **Orders:** `/api/orders` (POST, GET), `/api/orders/myorders`
+```bash
+cd backend
+npm run seed
+```
 
+## Test the MVP flows
 
-## License
+```bash
+cd backend
+npm run test:mvp
+```
 
-Educational/Portfolio use.
+You can also run them individually:
+
+- `npm run test:health`
+- `npm run test:auth`
+- `npm run test:products`
+- `npm run test:orders`
+
+## Main API routes
+
+- `GET /api/health`
+- `POST /api/users`
+- `GET /api/users/me`
+- `POST /api/auth/login`
+- `GET /api/products`
+- `GET /api/products/:id`
+- `POST /api/products` (admin)
+- `PUT /api/products/:id` (admin)
+- `DELETE /api/products/:id` (admin)
+- `POST /api/orders`
+- `GET /api/orders/myorders`
+- `GET /api/orders/:id`
+- `PUT /api/orders/:id/pay`
+- `GET /api/orders` (admin)
+- `PUT /api/orders/:id/deliver` (admin)
