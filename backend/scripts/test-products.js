@@ -15,6 +15,7 @@ function uniqueProduct() {
     description: "MVP test product",
     price: 999,
     image: "https://via.placeholder.com/300",
+    category: "Testing",
     countInStock: 7,
   };
 }
@@ -50,6 +51,16 @@ async function run() {
   const getByIdRes = await request(`/api/products/${productId}`);
   assertOk(getByIdRes, "GET /api/products/:id");
   assertTrue(getByIdRes.data?._id === productId, "Fetched product id mismatch");
+  assertTrue(getByIdRes.data?.category === createBody.category, "Fetched product category mismatch");
+
+  logStep("Products flow: GET /api/products?category=Testing");
+  const categoryRes = await request(`/api/products?category=${encodeURIComponent(createBody.category)}`);
+  assertOk(categoryRes, "GET /api/products?category");
+  assertTrue(Array.isArray(categoryRes.data), "Category products response must be an array");
+  assertTrue(
+    categoryRes.data.some((product) => product._id === productId),
+    "Category filter did not include created product"
+  );
 
   logStep("Products flow: update product as admin");
   const updateRes = await request(`/api/products/${productId}`, {
@@ -58,11 +69,13 @@ async function run() {
     body: {
       ...createBody,
       name: `${createBody.name} Updated`,
+      category: "Testing Updated",
       countInStock: 10,
     },
   });
   assertOk(updateRes, "PUT /api/products/:id");
   assertTrue(updateRes.data?.name.includes("Updated"), "Product update did not persist");
+  assertTrue(updateRes.data?.category === "Testing Updated", "Product category update did not persist");
 
   logStep("Products flow: delete product as admin");
   const deleteRes = await request(`/api/products/${productId}`, {

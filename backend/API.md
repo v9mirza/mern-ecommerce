@@ -31,6 +31,14 @@ GET    /api/products
 
 → Get all products
 
+Optional query:
+
+```
+GET    /api/products?category=Audio
+```
+
+→ Get products by exact category match
+
 ```
 GET    /api/products/:id
 ```
@@ -43,6 +51,8 @@ POST   /api/products
 
 → Create new product
 **Auth required + Admin only**
+
+Required fields: `name`, `description`, `price`, `image`, `category`, `countInStock`
 
 ---
 
@@ -90,4 +100,3 @@ Content-Type: application/json
 * Products and users are real DB entities (no mocks)
 
 ---
-

@@ -71,6 +71,7 @@ You can also run them individually:
 - `GET /api/users/me`
 - `POST /api/auth/login`
 - `GET /api/products`
+- `GET /api/products?category=Audio` (optional category filter)
 - `GET /api/products/:id`
 - `POST /api/products` (admin)
 - `PUT /api/products/:id` (admin)

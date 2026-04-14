@@ -4,7 +4,14 @@ const Product = require("../models/Product");
 // GET /api/products
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.find({});
+    const { category } = req.query;
+    const filter = {};
+
+    if (typeof category === "string" && category.trim()) {
+      filter.category = category.trim();
+    }
+
+    const products = await Product.find(filter);
     res.json(products);
   } catch {
     res.status(500).json({ message: "Server error" });
@@ -33,10 +40,10 @@ exports.getProductById = async (req, res) => {
 
 // POST /api/products (admin)
 exports.createProduct = async (req, res) => {
-  const { name, description, price, image, countInStock } = req.body;
+  const { name, description, price, image, category, countInStock } = req.body;
 
-  if (!name || !description || !image) {
-    return res.status(400).json({ message: "Name, description, and image are required" });
+  if (!name || !description || !image || !category) {
+    return res.status(400).json({ message: "Name, description, image, and category are required" });
   }
 
   if (typeof price !== "number" || price < 0) {
@@ -53,6 +60,7 @@ exports.createProduct = async (req, res) => {
       description,
       price,
       image,
+      category: category.trim(),
       countInStock,
     });
 
@@ -66,14 +74,14 @@ exports.createProduct = async (req, res) => {
 // PUT /api/products/:id (admin)
 exports.updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, description, price, image, countInStock } = req.body;
+  const { name, description, price, image, category, countInStock } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).json({ message: "Invalid product id" });
   }
 
-  if (!name || !description || !image) {
-    return res.status(400).json({ message: "Name, description, and image are required" });
+  if (!name || !description || !image || !category) {
+    return res.status(400).json({ message: "Name, description, image, and category are required" });
   }
 
   if (typeof price !== "number" || price < 0) {
@@ -94,6 +102,7 @@ exports.updateProduct = async (req, res) => {
     product.description = description;
     product.price = price;
     product.image = image;
+    product.category = category.trim();
     product.countInStock = countInStock;
 
     const updatedProduct = await product.save();

@@ -17,6 +17,7 @@ const productSchema = {
   description: { required: true },
   price: { required: true, isNumber: true, isPositive: true },
   image: { required: true },
+  category: { required: true },
   countInStock: { required: true, isNumber: true },
 };
 

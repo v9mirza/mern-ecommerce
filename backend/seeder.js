@@ -11,6 +11,7 @@ const products = [
     description: "High quality wireless headphones",
     price: 2999,
     image: "https://cdn.dummyjson.com/product-images/66/thumbnail.jpg",
+    category: "Audio",
     countInStock: 10,
   },
   {
@@ -18,6 +19,7 @@ const products = [
     description: "Fitness tracking smart watch",
     price: 4999,
     image: "https://cdn.dummyjson.com/product-images/105/thumbnail.jpg",
+    category: "Wearables",
     countInStock: 5,
   },
   {
@@ -25,6 +27,7 @@ const products = [
     description: "RGB gaming mouse",
     price: 1499,
     image: "https://cdn.dummyjson.com/product-images/87/thumbnail.jpg",
+    category: "Accessories",
     countInStock: 20,
   },
   {
@@ -32,6 +35,7 @@ const products = [
     description: "Compact earbuds with noise isolation",
     price: 2199,
     image: "https://cdn.dummyjson.com/product-images/108/thumbnail.jpg",
+    category: "Audio",
     countInStock: 25,
   },
   {
@@ -39,6 +43,7 @@ const products = [
     description: "Water resistant speaker with deep bass",
     price: 3299,
     image: "https://cdn.dummyjson.com/product-images/99/thumbnail.jpg",
+    category: "Audio",
     countInStock: 14,
   },
   {
@@ -46,6 +51,7 @@ const products = [
     description: "Tactile mechanical keyboard with backlight",
     price: 4599,
     image: "https://cdn.dummyjson.com/product-images/76/thumbnail.jpg",
+    category: "Accessories",
     countInStock: 11,
   },
   {
@@ -53,6 +59,7 @@ const products = [
     description: "Ultra HD webcam for streaming and meetings",
     price: 3899,
     image: "https://cdn.dummyjson.com/product-images/82/thumbnail.jpg",
+    category: "Accessories",
     countInStock: 9,
   },
   {
@@ -60,6 +67,7 @@ const products = [
     description: "7-in-1 USB-C hub for laptops",
     price: 1999,
     image: "https://cdn.dummyjson.com/product-images/78/thumbnail.jpg",
+    category: "Accessories",
     countInStock: 30,
   },
   {
@@ -67,6 +75,7 @@ const products = [
     description: "High speed portable SSD storage",
     price: 8999,
     image: "https://cdn.dummyjson.com/product-images/96/thumbnail.jpg",
+    category: "Storage",
     countInStock: 8,
   },
   {
@@ -74,6 +83,7 @@ const products = [
     description: "High capacity fast-charging power bank",
     price: 2799,
     image: "https://cdn.dummyjson.com/product-images/102/thumbnail.jpg",
+    category: "Power",
     countInStock: 18,
   },
   {
@@ -81,6 +91,7 @@ const products = [
     description: "Dual port USB-C fast wall charger",
     price: 1699,
     image: "https://cdn.dummyjson.com/product-images/73/thumbnail.jpg",
+    category: "Power",
     countInStock: 26,
   },
   {
@@ -88,6 +99,7 @@ const products = [
     description: "27 inch IPS monitor with 144Hz refresh rate",
     price: 28999,
     image: "https://cdn.dummyjson.com/product-images/79/thumbnail.jpg",
+    category: "Displays",
     countInStock: 6,
   },
   {
@@ -95,6 +107,7 @@ const products = [
     description: "Adjustable chair with lumbar support",
     price: 15999,
     image: "https://cdn.dummyjson.com/product-images/91/thumbnail.jpg",
+    category: "Furniture",
     countInStock: 4,
   },
   {
@@ -102,6 +115,7 @@ const products = [
     description: "Portable stand for improved laptop posture",
     price: 1299,
     image: "https://cdn.dummyjson.com/product-images/95/thumbnail.jpg",
+    category: "Furniture",
     countInStock: 22,
   },
   {
@@ -109,6 +123,7 @@ const products = [
     description: "Dimmable desk lamp with touch controls",
     price: 1199,
     image: "https://cdn.dummyjson.com/product-images/88/thumbnail.jpg",
+    category: "Furniture",
     countInStock: 16,
   },
 ];
