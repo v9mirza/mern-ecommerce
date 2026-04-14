@@ -5,17 +5,8 @@ const {
   assertTrue,
   ensureUser,
   defaultUser,
+  ensureAnyProductId,
 } = require("./utils");
-
-async function getAnyProductId() {
-  const productsRes = await request("/api/products");
-  assertOk(productsRes, "GET /api/products");
-  assertTrue(
-    Array.isArray(productsRes.data) && productsRes.data.length > 0,
-    "No products found. Run npm run seed first."
-  );
-  return productsRes.data[0]._id;
-}
 
 async function run() {
   // ─── Setup ────────────────────────────────────────────────────────────────
@@ -23,7 +14,7 @@ async function run() {
   const userAuth = await ensureUser(defaultUser);
   const token = userAuth.token;
 
-  const productId = await getAnyProductId();
+  const productId = await ensureAnyProductId();
 
   // ─── Validation checks ────────────────────────────────────────────────────
   logStep("Validation: POST /api/wishlist/toggle with missing productId should fail");

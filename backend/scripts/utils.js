@@ -93,6 +93,37 @@ async function makeAdminByEmail(email) {
   await mongoose.disconnect();
 }
 
+async function ensureAnyProductId() {
+  const productsRes = await request("/api/products");
+  assertOk(productsRes, "GET /api/products");
+
+  if (Array.isArray(productsRes.data) && productsRes.data.length > 0) {
+    return productsRes.data[0]._id;
+  }
+
+  const adminAuth = await ensureUser(defaultAdmin);
+  await makeAdminByEmail(defaultAdmin.email);
+
+  const createBody = {
+    name: `Auto Seed Product ${Date.now()}`,
+    description: "Auto-created for test prerequisites",
+    price: 999,
+    image: "https://via.placeholder.com/300",
+    category: "Testing",
+    countInStock: 10,
+  };
+
+  const createRes = await request("/api/products", {
+    method: "POST",
+    token: adminAuth.token,
+    body: createBody,
+  });
+
+  assertOk(createRes, "POST /api/products (auto-seed)");
+  assertTrue(Boolean(createRes.data?._id), "Auto-seeded product id missing");
+  return createRes.data._id;
+}
+
 module.exports = {
   BASE_URL,
   defaultUser,
@@ -103,4 +134,5 @@ module.exports = {
   assertTrue,
   ensureUser,
   makeAdminByEmail,
+  ensureAnyProductId,
 };

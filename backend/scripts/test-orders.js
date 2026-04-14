@@ -7,14 +7,8 @@ const {
   defaultUser,
   defaultAdmin,
   makeAdminByEmail,
+  ensureAnyProductId,
 } = require("./utils");
-
-async function getAnyProductId() {
-  const productsRes = await request("/api/products");
-  assertOk(productsRes, "GET /api/products");
-  assertTrue(Array.isArray(productsRes.data) && productsRes.data.length > 0, "No products found. Run npm run seed first.");
-  return productsRes.data[0]._id;
-}
 
 async function run() {
   logStep("Orders flow: setup user + admin");
@@ -29,7 +23,7 @@ async function run() {
   assertOk(adminLogin, "Admin login");
   const adminToken = adminLogin.data.token;
 
-  const productId = await getAnyProductId();
+  const productId = await ensureAnyProductId();
 
   logStep("Orders flow: create order as user");
   const orderPayload = {
