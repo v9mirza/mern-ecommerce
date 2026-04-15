@@ -29,8 +29,11 @@ app.get("/api/health", (req, res) => {
   app.use("/api/orders", require("./routes/orderRoutes"));
   app.use("/api/cart", require("./routes/cartRoutes"));
   app.use("/api/wishlist", require("./routes/wishlistRoutes"));
-  
 
+// 404 Not Found handler (must be last)
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
