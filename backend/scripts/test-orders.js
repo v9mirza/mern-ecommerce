@@ -24,18 +24,28 @@ async function run() {
   const adminToken = adminLogin.data.token;
 
   const productId = await ensureAnyProductId();
+  const productBeforeRes = await request(`/api/products/${productId}`);
+  assertOk(productBeforeRes, "GET /api/products/:id (before order)");
+  const stockBefore = productBeforeRes.data?.countInStock;
+  assertTrue(typeof stockBefore === "number", "Product stock must be a number");
+
+  logStep("Orders flow: clear cart to keep test deterministic");
+  const clearCartRes = await request("/api/cart", {
+    method: "DELETE",
+    token: userAuth.token,
+  });
+  assertOk(clearCartRes, "DELETE /api/cart");
+
+  logStep("Orders flow: add item to cart before checkout");
+  const addToCartRes = await request("/api/cart", {
+    method: "POST",
+    token: userAuth.token,
+    body: { productId, qty: 1 },
+  });
+  assertOk(addToCartRes, "POST /api/cart");
 
   logStep("Orders flow: create order as user");
   const orderPayload = {
-    orderItems: [
-      {
-        name: "Test Order Item",
-        qty: 1,
-        image: "https://via.placeholder.com/300",
-        price: 299,
-        product: productId,
-      },
-    ],
     shippingAddress: {
       address: "123 MVP Street",
       city: "Mumbai",
@@ -43,10 +53,11 @@ async function run() {
       country: "India",
     },
     paymentMethod: "Cash On Delivery",
-    itemsPrice: 299,
-    taxPrice: 0,
-    shippingPrice: 100,
-    totalPrice: 399,
+    // These should be ignored by backend, which now computes prices server-side.
+    itemsPrice: 1,
+    taxPrice: 1,
+    shippingPrice: 1,
+    totalPrice: 1,
   };
 
   const createOrderRes = await request("/api/orders", {
@@ -57,6 +68,23 @@ async function run() {
   assertOk(createOrderRes, "POST /api/orders");
   const orderId = createOrderRes.data?._id;
   assertTrue(Boolean(orderId), "Created order id missing");
+  assertTrue(createOrderRes.data?.orderItems?.length >= 1, "Order should be created from cart items");
+  assertTrue(
+    createOrderRes.data?.orderItems?.some((item) => item.product === productId && item.qty === 1),
+    "Order must include the product added to cart"
+  );
+  assertTrue(createOrderRes.data?.itemsPrice > 1, "Order prices should be server-calculated");
+
+  logStep("Orders flow: cart should be cleared after successful checkout");
+  const cartAfterOrderRes = await request("/api/cart", { token: userAuth.token });
+  assertOk(cartAfterOrderRes, "GET /api/cart");
+  assertTrue(cartAfterOrderRes.data?.items?.length === 0, "Cart should be empty after placing order");
+
+  logStep("Orders flow: stock should decrement after successful checkout");
+  const productAfterRes = await request(`/api/products/${productId}`);
+  assertOk(productAfterRes, "GET /api/products/:id (after order)");
+  const stockAfter = productAfterRes.data?.countInStock;
+  assertTrue(stockAfter === stockBefore - 1, `Stock must decrement by 1 (before=${stockBefore}, after=${stockAfter})`);
 
   logStep("Orders flow: get my orders");
   const myOrdersRes = await request("/api/orders/myorders", { token: userAuth.token });
