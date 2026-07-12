@@ -1,6 +1,3 @@
-# DevCart
-
-Modern full-stack e-commerce app for a tech store — browse products, manage cart & wishlist, checkout, and run the store from an admin panel with sales analytics.
 
 ## What's included
 
